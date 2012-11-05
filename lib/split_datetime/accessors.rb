@@ -29,15 +29,15 @@ module SplitDatetime
         end
 
         define_method("#{attr}_date") do
-          self.send(attr).strftime(opts[:format])
+          self.send(attr).strftime(opts[:format]) unless self.send(attr).nil?
         end
 
         define_method("#{attr}_hour") do
-          self.send(attr).hour
+          self.send(attr).hour unless self.send(attr).nil?
         end
 
         define_method("#{attr}_min") do
-          self.send(attr).min
+          self.send(attr).min unless self.send(attr).nil?
         end
       end
     end
