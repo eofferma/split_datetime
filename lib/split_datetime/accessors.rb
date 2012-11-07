@@ -13,7 +13,7 @@ module SplitDatetime
         attr_accessible "#{attr}(4i)", "#{attr}(5i)"
 
         define_method(attr) do
-          super() || opts[:default].call
+          opts[:default].call
         end
 
         define_method("#{attr}(4i)=") do |hour|
@@ -41,7 +41,7 @@ module SplitDatetime
         attr_accessible "#{attr}_date", "#{attr}_hour", "#{attr}_min"
 
         define_method(attr) do
-          super() || opts[:default].call
+          opts[:default].call
         end
 
         define_method("#{attr}_date=") do |date|
