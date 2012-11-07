@@ -10,10 +10,21 @@ module SplitDatetime
       end
 
       attrs.each do |attr|
-        attr_accessible "#{attr}(4i)", "#{attr}(5i)"
+        attr_accessible "#{attr}(1i)", "#{attr}(2i)", "#{attr}(3i)", "#{attr}(4i)", "#{attr}(5i)"
 
-        define_method(attr) do
-          opts[:default].call
+        define_method("#{attr}(1i)=") do |year|
+          datetime = self.send(attr) || opts[:default].call
+          self.send("#{attr}=", datetime.change(year: year))
+        end
+
+        define_method("#{attr}(2i)=") do |month|
+          datetime = self.send(attr) || opts[:default].call
+          self.send("#{attr}=", datetime.change(month: month))
+        end
+
+        define_method("#{attr}(3i)=") do |day|
+          datetime = self.send(attr) || opts[:default].call
+          self.send("#{attr}=", datetime.change(day: day))
         end
 
         define_method("#{attr}(4i)=") do |hour|
@@ -41,7 +52,7 @@ module SplitDatetime
         attr_accessible "#{attr}_date", "#{attr}_hour", "#{attr}_min"
 
         define_method(attr) do
-          opts[:default].call
+          super() || opts[:default].call
         end
 
         define_method("#{attr}_date=") do |date|

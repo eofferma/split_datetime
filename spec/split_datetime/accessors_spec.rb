@@ -13,27 +13,8 @@ describe SplitDatetime::Accessors do
 
   context "Testing accepts_split_time_for..." do
     before do
-      Model.should_receive(:attr_accessible).with("starts_at(4i)", "starts_at(5i)")
+      Model.should_receive(:attr_accessible).with("starts_at(1i)", "starts_at(2i)", "starts_at(3i)", "starts_at(4i)", "starts_at(5i)")
       Model.accepts_split_time_for(:starts_at)
-    end
-
-    describe "#starts_at" do
-      it "lets the superclass (usually ActiveRecord::Base) override the value" do
-        class ModelParent; def starts_at; 5; end; end
-        model.starts_at.should == 5
-      end
-
-      it "sets the default time to Time.now" do
-        now = Time.new(2222, 12, 22, 13, 44)
-        Time.stub(:now) { now }
-        model.starts_at.should == now.change(min: 0)
-      end
-
-      it "allows setting the default value through options" do
-        Model.stub(:attr_accessible)
-        Model.accepts_split_time_for(:starts_at, default: lambda { 10 })
-        Model.new.starts_at.should == 10
-      end
     end
 
     describe "split time methods" do
