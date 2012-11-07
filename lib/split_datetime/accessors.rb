@@ -1,5 +1,34 @@
 module SplitDatetime
   module Accessors
+
+    def accepts_split_time_for(*attrs)
+      opts = { format: "%F", default: lambda { Time.now.change(min: 0) } }
+
+      if attrs.last.class == Hash
+        custom = attrs.delete_at(-1)
+        opts = opts.merge(custom)
+      end
+
+      attrs.each do |attr|
+        attr_accessible "#{attr}(4i)", "#{attr}(5i)"
+
+        define_method(attr) do
+          super() || opts[:default].call
+        end
+
+        define_method("#{attr}(4i)=") do |hour|
+          datetime = self.send(attr) || opts[:default].call
+          self.send("#{attr}=", datetime.change(hour: hour))
+        end
+
+        define_method("#{attr}(5i)=") do |min|
+          datetime = self.send(attr) || opts[:default].call
+          self.send("#{attr}=", datetime.change(min: min))
+        end
+
+      end
+    end
+
     def accepts_split_datetime_for(*attrs)
       opts = { format: "%F", default: lambda { Time.now.change(min: 0) } }
 
