@@ -37,6 +37,26 @@ module SplitDatetime
           self.send("#{attr}=", datetime.change(min: min))
         end
 
+        define_method("#{attr}(1i)") do
+          self.send(attr).year unless self.send(attr).nil?
+        end
+
+        define_method("#{attr}(2i)") do
+          self.send(attr).month unless self.send(attr).nil?
+        end
+
+        define_method("#{attr}(3i)") do
+          self.send(attr).day unless self.send(attr).nil?
+        end
+
+        define_method("#{attr}(4i)") do
+          self.send(attr).hour unless self.send(attr).nil?
+        end
+
+        define_method("#{attr}(5i)") do
+          self.send(attr).min unless self.send(attr).nil?
+        end
+
       end
     end
 
