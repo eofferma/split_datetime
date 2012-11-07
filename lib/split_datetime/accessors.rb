@@ -14,27 +14,27 @@ module SplitDatetime
 
         define_method("#{attr}(1i)=") do |year|
           datetime = self.send(attr) || opts[:default].call
-          self.send("#{attr}=", datetime.change(year: year))
+          self.send("#{attr}=", datetime.change(year: year.to_i))
         end
 
         define_method("#{attr}(2i)=") do |month|
           datetime = self.send(attr) || opts[:default].call
-          self.send("#{attr}=", datetime.change(month: month))
+          self.send("#{attr}=", datetime.change(month: month.to_i))
         end
 
         define_method("#{attr}(3i)=") do |day|
           datetime = self.send(attr) || opts[:default].call
-          self.send("#{attr}=", datetime.change(day: day))
+          self.send("#{attr}=", datetime.change(day: day.to_i))
         end
 
         define_method("#{attr}(4i)=") do |hour|
           datetime = self.send(attr) || opts[:default].call
-          self.send("#{attr}=", datetime.change(hour: hour))
+          self.send("#{attr}=", datetime.change(hour: hour.to_i))
         end
 
         define_method("#{attr}(5i)=") do |min|
           datetime = self.send(attr) || opts[:default].call
-          self.send("#{attr}=", datetime.change(min: min))
+          self.send("#{attr}=", datetime.change(min: min.to_i))
         end
 
         define_method("#{attr}(1i)") do
@@ -81,11 +81,11 @@ module SplitDatetime
         end
 
         define_method("#{attr}_hour=") do |hour|
-          self.send("#{attr}=", self.send(attr).change(hour: hour, min: self.send(attr).min))
+          self.send("#{attr}=", self.send(attr).change(hour: hour.to_i, min: self.send(attr).min))
         end
 
         define_method("#{attr}_min=") do |min|
-          self.send("#{attr}=", self.send(attr).change(min: min))
+          self.send("#{attr}=", self.send(attr).change(min: min.to_i))
         end
 
         define_method("#{attr}_date") do
