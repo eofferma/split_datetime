@@ -10,7 +10,6 @@ module SplitDatetime
       end
 
       attrs.each do |attr|
-        attr_accessible "#{attr}(1i)", "#{attr}(2i)", "#{attr}(3i)", "#{attr}(4i)", "#{attr}(5i)"
 
         define_method("#{attr}(1i)=") do |year|
           datetime = self.send(attr) || opts[:default].call
